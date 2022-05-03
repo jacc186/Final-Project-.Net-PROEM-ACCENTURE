@@ -1,0 +1,87 @@
+﻿<style>
+    .nav-link:hover {
+        background-color: #bd504f;
+        color: white;
+        transition: 0.6s;
+    }
+
+    .nav-link {
+        color: #000000;
+        font-size: 1.2em;
+        font-family: 'Lato', sans-serif;
+    }
+
+    .nav-bar {
+        background-color: #ffffff;
+    }
+
+        .nav-bar li a {
+            display: block;
+            padding: 0.75em;
+        }
+
+</style>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ProyectoFinal - Store</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="~/lib/font-awesome/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Lato&family=Radio+Canada:wght@500&display=swap" rel="stylesheet" />
+</head>
+<body>
+    <header class="d-flex flex-wrap nav-bar">
+        <ul class="nav text-small">
+            <li>
+                <a href="/" class="nav-link">
+                    <i class="fa-solid fa-house-chimney"></i>
+                    Home
+                </a>
+            </li>
+            <li>
+                <a href="#" class="nav-link">
+                    <i class="fa-solid fa-chart-bar"></i>
+                    Dashboard
+                </a>
+            </li>
+            <li>
+                <a href="/Bill/Index" class="nav-link">
+                    <i class="fa-solid fa-pen-to-square"></i>
+                    Orders
+                </a>
+            </li>
+            <li>
+                <a href="/Item/Index" class="nav-link">
+                    <i class="fa-solid fa-cart-shopping"></i>
+                    Products
+                </a>
+            </li>
+            <li>
+                <a href="/Customer/Index" class="nav-link">
+                    <i class="fa-solid fa-user"></i>
+                    Customers
+                </a>
+            </li>
+        </ul>
+    </header>
+    <div class="container-fluid">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="footer text-muted">
+        <div class="container">
+            &copy; 2022 - ProyectoFinal - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

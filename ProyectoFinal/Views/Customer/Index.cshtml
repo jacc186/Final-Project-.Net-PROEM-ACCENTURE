@@ -1,0 +1,150 @@
+﻿@model FinalProject.Models.CustomersListViewModel
+@*
+
+*@
+@{
+}
+
+<style>
+    * {
+        box-sizing: border-box;
+    }
+
+    .content {
+        max-width: 980px;
+        margin-left: auto;
+        margin-right: auto;
+        display: grid;
+        width: 100%;
+        padding: 1.5em;
+        margin-top: 0.5em;
+    }
+
+    .links {
+        margin-top: 15px;
+    }
+
+    body {
+        background-color: #51406a;
+        color: white;
+        font-family: 'Radio Canada', sans-serif;
+    }
+
+    .logo {
+        text-align: center;
+        font-size: 3em;
+    }
+
+        .logo span {
+            color: #bd504f;
+        }
+
+    .table-wrapper {
+        box-shadow: 0 0 20px rgb(126 197 250);
+        margin-top: 1.2em;
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+    }
+
+        .table-wrapper > * {
+            padding: 2em;
+        }
+
+    .customer-table {
+        background-color: #645181;
+    }
+
+    .customer-form {
+        background-color: #514857;
+    }
+
+        .customer-form form .form-item {
+            margin: 0;
+            padding: 1em;
+        }
+
+        .customer-form form button,
+        .customer-form form input {
+            width: 100%;
+            padding: 1.7em;
+            border: none;
+            background: none;
+            border-bottom: 1px solid black;
+            outline: none;
+            color: white;
+        }
+
+    .customer-table table,
+    .customer-table table a i {
+        color: white;
+    }
+
+    .customer-form form .button input {
+        background-color: #bd504f;
+        border-bottom: 0;
+        text-transform: uppercase;
+        padding: 1em;
+    }
+
+    .form-item {
+        margin: 1em;
+    }
+
+    .customer-form form {
+        display: grid;
+        grid-template-columns: 1fr;
+    }
+
+        .customer-form form .button input:hover,
+        .customer-form form .button input:hover {
+            background-color: #ce5857;
+            transition: 0.3s;
+            outline: 0;
+        }
+</style>
+<div class="content">
+    <h1 class="logo">Manage your <span>Costumers</span></h1>
+    <div class="table-wrapper">
+        <div class="customer-table">
+            <h3>Info Costumers</h3>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var customer in Model.Customers)
+                    {
+                        <tr>
+                            <td>@customer.Id</td>
+                            <td>@customer.Name</td>
+                            <td>@customer.Email</td>
+                            <td><a href="/Customer/Edit/@customer.Id"><i class="fa-solid fa-pen-to-square"></i></a></td>
+                            <td><a href="/Customer/Delete/@customer.Id"><i class="fa-solid fa-trash-can"></i></a></td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <div class="customer-form">
+            <h3>Add a new costumer</h3>
+            <form action="" method="post">
+                <div class="form-item">
+                    <label for="fullname">Fullname</label>
+                    <input type="text" name="fullname" id="fullname" value="" />
+                </div>
+                <div class="form-item">
+                    <label for="email">Email</label>
+                    <input type="email" name="email" id="email" value="" />
+                </div>
+                <div class="form-item button">
+                    <input type="submit" value="Edit" />
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+

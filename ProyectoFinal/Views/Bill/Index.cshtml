@@ -1,0 +1,50 @@
+﻿@model FinalProject.Models.BillListClassModel
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+<div class="content">
+    <h1 class="logo">Manage your <span>Costumers</span></h1>
+    <div class="table-wrapper">
+        <div class="customer-table">
+            <h3>Info Table</h3>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Customer</th>
+                        <th>Email</th>
+                    </tr>
+                </thead>
+                @*<tbody>
+                    @foreach (var customer in Model.BillListClassModel)
+                    {
+                        <tr>
+                            <td>@customer.Id</td>
+                            <td>@customer.Name</td>
+                            <td>@customer.Email</td>
+                        </tr>
+                    }
+                </tbody>*@
+            </table>
+        </div>
+        <div class="customer-form">
+            <h3>Add a new costumer</h3>
+            <form action="" method="post">
+                <div class="form-item">
+                    <label for="fullname">Fullname</label>
+                    <input type="text" name="fullname" id="fullname" value="" />
+                </div>
+                <div class="form-item">
+                    <label for="email">Email</label>
+                    <input type="email" name="email" id="email" value="" />
+                </div>
+                <div class="form-item button">
+                    <input type="submit" name="Add" value="Add" />
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
