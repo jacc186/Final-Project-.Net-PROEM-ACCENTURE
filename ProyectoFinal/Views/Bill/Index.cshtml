@@ -4,34 +4,142 @@
 *@
 @{
 }
+<style>
+    * {
+        box-sizing: border-box;
+    }
 
+    .content {
+        max-width: 980px;
+        margin-left: auto;
+        margin-right: auto;
+        display: grid;
+        width: 100%;
+        padding: 1.5em;
+        margin-top: 0.5em;
+    }
+
+    .links {
+        margin-top: 15px;
+    }
+
+    body {
+        background-color: #51406a;
+        color: white;
+        font-family: 'Radio Canada', sans-serif;
+    }
+
+    .logo {
+        text-align: center;
+        font-size: 3em;
+    }
+
+        .logo span {
+            color: #bd504f;
+        }
+
+    .table-wrapper {
+        box-shadow: 0 0 20px rgb(126 197 250);
+        margin-top: 1.2em;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+    }
+
+        .table-wrapper > * {
+            padding: 2em;
+        }
+
+    .customer-table {
+        background-color: #645181;
+    }
+
+    .customer-form {
+        background-color: #514857;
+    }
+
+        .customer-form form .form-item {
+            margin: 0;
+            padding: 1em;
+        }
+
+        .customer-form form button,
+        .customer-form form input {
+            width: 100%;
+            border: none;
+            background: none;
+            border-bottom: 1px solid black;
+            outline: none;
+            color: white;
+        }
+
+    .customer-table table,
+    .customer-table table a i {
+        color: white;
+    }
+
+    .customer-form form .button input {
+        background-color: #bd504f;
+        border-bottom: 0;
+        text-transform: uppercase;
+        padding: 1em;
+    }
+
+    .form-item {
+        margin: 1em;
+    }
+
+    .customer-form form {
+        display: grid;
+        grid-template-columns: 1fr;
+    }
+
+        .customer-form form .button input:hover,
+        .customer-form form .button input:hover {
+            background-color: #ce5857;
+            transition: 0.3s;
+            outline: 0;
+        }
+
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+        /* display: none; <- Crashes Chrome on hover */
+        -webkit-appearance: none;
+        margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+    }
+
+    input[type=number] {
+        -moz-appearance: textfield; /* Firefox */
+    }
+</style>
 <div class="content">
-    <h1 class="logo">Manage your <span>Costumers</span></h1>
+    <h1 class="logo">Control your <span>Bills</span></h1>
     <div class="table-wrapper">
         <div class="customer-table">
-            <h3>Info Table</h3>
+            <h3>Bills List</h3>
             <table class="table table-bordered">
                 <thead>
                     <tr>
                         <th>Id</th>
                         <th>Customer</th>
-                        <th>Email</th>
+                        <th>Items</th>
+                        <th>Purchase Date</th>
                     </tr>
                 </thead>
-                @*<tbody>
-                    @foreach (var customer in Model.BillListClassModel)
-                    {
-                        <tr>
-                            <td>@customer.Id</td>
-                            <td>@customer.Name</td>
-                            <td>@customer.Email</td>
-                        </tr>
-                    }
-                </tbody>*@
+                <tbody>
+                        @foreach (var bill in Model.Bills)
+                        {
+                            <tr>
+                                <td>@bill.Id</td>
+                                <td>@bill.Costumer</td>
+                                <td>@bill.Item</td>
+                                <td>@bill.DatePurchase</td>
+                            </tr>
+                        }
+                    </tbody>
             </table>
         </div>
         <div class="customer-form">
-            <h3>Add a new costumer</h3>
+            <h3>Add a new Bill</h3>
             <form action="" method="post">
                 <div class="form-item">
                     <label for="fullname">Fullname</label>

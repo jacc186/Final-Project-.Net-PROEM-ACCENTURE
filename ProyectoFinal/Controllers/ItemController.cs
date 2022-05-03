@@ -15,7 +15,7 @@ namespace FinalProject.Controllers
             this.context = context;
         }
         public ProjectContext context { get; set; }
-        public IActionResult Index(int id, string name, decimal price)
+        public IActionResult Index(int id, string name, float price)
         {
             if(id==0 && name != null && price != 0)
             {
@@ -24,6 +24,20 @@ namespace FinalProject.Controllers
             }
             var model = new ItemListViewModel();
             model.Items = context.Items.ToList();
+            return View(model);
+        }
+        [HttpPost]
+        public IActionResult Edit(Item item)
+        {
+            item.State = true;
+            context.Attach(item);
+            context.Entry(item).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+            context.SaveChanges();
+            return RedirectToAction("Index");
+        }
+        public IActionResult Edit(int id)
+        {
+            var model = context.Items.Find(id);
             return View(model);
         }
     }

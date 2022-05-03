@@ -17,7 +17,7 @@ namespace ProyectoFinal.Models
         public string Name { get; set; }
 
         [Required(ErrorMessage = "Price is required")]
-        public decimal Price { get; set; }
+        public float Price { get; set; }
 
         [Column(TypeName = "bit")]
         public bool State { get; set; }
