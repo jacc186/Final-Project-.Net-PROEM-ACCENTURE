@@ -41,5 +41,16 @@ namespace FinalProject.Controllers
             var model = context.Customers.Find(id);
             return View(model);
         }
+        public IActionResult Delete(int id)
+        {
+            if(id != 0)
+            {
+                var model = new Customer();
+                model = context.Customers.Find(id);
+                context.Customers.Remove(model);
+                context.SaveChanges();
+            }
+            return RedirectToAction("Index");
+        }
     }
 }

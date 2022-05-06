@@ -17,7 +17,7 @@ namespace FinalProject.Controllers
         public ProjectContext context { get; set; }
         public IActionResult Index(int id, string name, float price)
         {
-            if(id==0 && name != null && price != 0)
+            if (id == 0 && name != null && price != 0)
             {
                 context.Items.Add(new Item { Name = name, Price = price, State = true });
                 context.SaveChanges();
@@ -39,6 +39,17 @@ namespace FinalProject.Controllers
         {
             var model = context.Items.Find(id);
             return View(model);
+        }
+        public IActionResult Delete(int id)
+        {
+            if (id != 0)
+            {
+                var model = new Item();
+                model = context.Items.Find(id);
+                context.Items.Remove(model);
+                context.SaveChanges();
+            }
+            return RedirectToAction("Index");
         }
     }
 }
