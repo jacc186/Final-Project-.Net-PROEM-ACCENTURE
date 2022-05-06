@@ -9,5 +9,6 @@ namespace FinalProject.Models
     public class BillListClassModel
     {
         public List<Bill> Bills { get; set; }
+        public List<Customer> Customers { get; set; }
     }
 }

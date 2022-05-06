@@ -121,29 +121,34 @@
                     <tr>
                         <th>Id</th>
                         <th>Customer</th>
-                        <th>Items</th>
+                        <th>Total</th>
                         <th>Purchase Date</th>
                     </tr>
                 </thead>
                 <tbody>
-                        @foreach (var bill in Model.Bills)
-                        {
-                            <tr>
-                                <td>@bill.Id</td>
-                                <td>@bill.Costumer</td>
-                                <td>@bill.Item</td>
-                                <td>@bill.DatePurchase</td>
-                            </tr>
-                        }
-                    </tbody>
+                    @foreach (var bill in Model.Bills)
+                    {
+                        <tr>
+                            <td>@bill.Id</td>
+                            <td>@bill.HowMany*@bill.Item.Price</td>
+                            <td>@bill.Item</td>
+                            <td>@bill.DatePurchase</td>
+                        </tr>
+                    }
+                </tbody>
             </table>
         </div>
         <div class="customer-form">
             <h3>Add a new Bill</h3>
             <form action="" method="post">
-                <div class="form-item">
-                    <label for="fullname">Fullname</label>
-                    <input type="text" name="fullname" id="fullname" value="" />
+                <div class="form-check">
+                    <label>Customer</label>
+                    <select class="form-control">
+                        @foreach (var customer in Model.Customers)
+                        {
+                        <option value="@customer.Id">@customer.Name</option>
+                        }
+                    </select>
                 </div>
                 <div class="form-item">
                     <label for="email">Email</label>

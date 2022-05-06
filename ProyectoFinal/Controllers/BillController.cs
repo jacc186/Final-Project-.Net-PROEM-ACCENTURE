@@ -25,6 +25,7 @@ namespace FinalProject.Controllers
             }
             var modelList = new BillListClassModel();
             modelList.Bills = context.Bills.ToList();
+            modelList.Customers = context.Customers.ToList();
             return View(modelList);
         }
     }
