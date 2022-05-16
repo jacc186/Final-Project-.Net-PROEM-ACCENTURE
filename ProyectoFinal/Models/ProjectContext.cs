@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using FinalProject.Models;
+using Microsoft.EntityFrameworkCore;
 using ProyectoFinal.Models;
 using System;
 using System.Collections.Generic;
@@ -17,5 +18,12 @@ namespace ProyectoFinal.Models
         public DbSet<Item> Items { get; set; }
         public DbSet<Bill> Bills { get; set; }
         public DbSet<Payment> Payments { get; set; }
+        public DbSet<BillDetail> BillDetails{ get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Bill>()
+                .HasMany(p => p.BillDetails);
+        }
     }
 }

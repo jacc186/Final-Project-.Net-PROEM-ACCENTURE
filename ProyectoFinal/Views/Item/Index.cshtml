@@ -4,14 +4,12 @@
 *@
 @{
 }
-
 <style>
     * {
         box-sizing: border-box;
     }
 
     .content {
-        max-width: 980px;
         margin-left: auto;
         margin-right: auto;
         display: grid;
@@ -25,7 +23,7 @@
     }
 
     body {
-        background-color: #51406a;
+        background-color: #f5f5f5;
         color: white;
         font-family: 'Radio Canada', sans-serif;
     }
@@ -33,10 +31,11 @@
     .logo {
         text-align: center;
         font-size: 3em;
+        color: #007da4;
     }
 
         .logo span {
-            color: #bd504f;
+            color: #fbb03b;
         }
 
     .table-wrapper {
@@ -51,11 +50,11 @@
         }
 
     .customer-table {
-        background-color: #645181;
+        background-color: #999999;
     }
 
     .customer-form {
-        background-color: #514857;
+        background-color: #4d4d4d;
     }
 
         .customer-form form .form-item {
@@ -66,7 +65,6 @@
         .customer-form form button,
         .customer-form form input {
             width: 100%;
-            padding: 1.7em;
             border: none;
             background: none;
             border-bottom: 1px solid black;
@@ -80,7 +78,7 @@
     }
 
     .customer-form form .button input {
-        background-color: #bd504f;
+        background-color: #FFC366;
         border-bottom: 0;
         text-transform: uppercase;
         padding: 1em;
@@ -97,10 +95,11 @@
 
         .customer-form form .button input:hover,
         .customer-form form .button input:hover {
-            background-color: #ce5857;
+            background-color: #fbb03b;
             transition: 0.3s;
             outline: 0;
         }
+
     input::-webkit-outer-spin-button,
     input::-webkit-inner-spin-button {
         /* display: none; <- Crashes Chrome on hover */
@@ -112,6 +111,7 @@
         -moz-appearance: textfield; /* Firefox */
     }
 </style>
+
 <div class="content">
     <h1 class="logo"><span>!!</span>You can add all <span>Items</span> you want<span>¡¡</span></h1>
     <div class="table-wrapper">
@@ -128,13 +128,13 @@
                 <tbody>
                     @foreach (var item in Model.Items)
                     {
-                        <tr>
-                            <td>@item.Id</td>
-                            <td>@item.Name</td>
-                            <td>@item.Price</td>
-                            <td><a href="/Item/Edit/@item.Id"><i class="fa-solid fa-pen-to-square"></i></a></td>
-                            <td><a href="/Item/Delete/@item.Id"><i class="fa-solid fa-trash-can"></i></a></td>
-                        </tr>
+                    <tr>
+                        <td>@item.Id</td>
+                        <td>@item.Name</td>
+                        <td>@item.Price</td>
+                        <td><a href="/Item/Edit/@item.Id"><i class="fa-solid fa-pen-to-square"></i></a></td>
+                        <td><a href="/Item/Delete/@item.Id"><i class="fa-solid fa-trash-can"></i></a></td>
+                    </tr>
                     }
                 </tbody>
             </table>

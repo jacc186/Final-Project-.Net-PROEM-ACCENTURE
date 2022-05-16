@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ProyectoFinal.Models;
 
 namespace FinalProject.Migrations
 {
     [DbContext(typeof(ProjectContext))]
-    partial class ProjectContextModelSnapshot : ModelSnapshot
+    [Migration("20220510013332_itemlist")]
+    partial class itemlist
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -29,17 +31,11 @@ namespace FinalProject.Migrations
                     b.Property<int>("Amount")
                         .HasColumnType("int");
 
-                    b.Property<int>("BillId")
+                    b.Property<int?>("BillId")
                         .HasColumnType("int");
 
                     b.Property<int>("ItemId")
                         .HasColumnType("int");
-
-                    b.Property<string>("ItemName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("State")
-                        .HasColumnType("bit");
 
                     b.HasKey("Id");
 
@@ -47,7 +43,7 @@ namespace FinalProject.Migrations
 
                     b.HasIndex("ItemId");
 
-                    b.ToTable("BillDetails");
+                    b.ToTable("BillDetail");
                 });
 
             modelBuilder.Entity("ProyectoFinal.Models.Bill", b =>
@@ -57,22 +53,20 @@ namespace FinalProject.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("CustomerId")
+                    b.Property<int?>("BillDetailId")
                         .HasColumnType("int");
 
-                    b.Property<string>("CustomerName")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("CustomerId")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("DatePurchase")
                         .HasColumnType("datetime2");
 
-                    b.Property<bool>("State")
-                        .HasColumnType("bit");
-
-                    b.Property<float>("Total")
-                        .HasColumnType("real");
-
                     b.HasKey("Id");
+
+                    b.HasIndex("BillDetailId");
+
+                    b.HasIndex("CustomerId");
 
                     b.ToTable("Bills");
                 });
@@ -144,11 +138,9 @@ namespace FinalProject.Migrations
 
             modelBuilder.Entity("FinalProject.Models.BillDetail", b =>
                 {
-                    b.HasOne("ProyectoFinal.Models.Bill", "Bill")
-                        .WithMany("BillDetails")
-                        .HasForeignKey("BillId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.HasOne("ProyectoFinal.Models.Bill", null)
+                        .WithMany("Items")
+                        .HasForeignKey("BillId");
 
                     b.HasOne("ProyectoFinal.Models.Item", "Item")
                         .WithMany()
@@ -156,9 +148,24 @@ namespace FinalProject.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Bill");
-
                     b.Navigation("Item");
+                });
+
+            modelBuilder.Entity("ProyectoFinal.Models.Bill", b =>
+                {
+                    b.HasOne("FinalProject.Models.BillDetail", "BillDetail")
+                        .WithMany()
+                        .HasForeignKey("BillDetailId");
+
+                    b.HasOne("ProyectoFinal.Models.Customer", "Costumer")
+                        .WithMany()
+                        .HasForeignKey("CustomerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("BillDetail");
+
+                    b.Navigation("Costumer");
                 });
 
             modelBuilder.Entity("ProyectoFinal.Models.Payment", b =>
@@ -174,7 +181,7 @@ namespace FinalProject.Migrations
 
             modelBuilder.Entity("ProyectoFinal.Models.Bill", b =>
                 {
-                    b.Navigation("BillDetails");
+                    b.Navigation("Items");
                 });
 #pragma warning restore 612, 618
         }

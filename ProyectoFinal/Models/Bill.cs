@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FinalProject.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -16,18 +17,14 @@ namespace ProyectoFinal.Models
         [Column(TypeName = "int")]
         public int CustomerId { get; set; }
 
-        [Required(ErrorMessage = "Item Required")]
-        [Column(TypeName = "int")]
-        public int ItemId { get; set; }
+        public string CustomerName { get; set; }
 
-        [Required(ErrorMessage = "HowMany Required")]
-        [Column(TypeName = "int")]
-        public int HowMany { get; set; }
+        public virtual IList<BillDetail> BillDetails { get; set; }
 
-        public Item Item { get; set; }
-
-        public  Customer Costumer { get; set; }
+        public float Total { get; set; }
 
         public DateTime DatePurchase { get; set; }
+
+        public bool State { get; set; }
     }
 }

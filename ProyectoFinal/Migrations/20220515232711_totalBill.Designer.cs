@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ProyectoFinal.Models;
 
 namespace FinalProject.Migrations
 {
     [DbContext(typeof(ProjectContext))]
-    partial class ProjectContextModelSnapshot : ModelSnapshot
+    [Migration("20220515232711_totalBill")]
+    partial class totalBill
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -29,7 +31,7 @@ namespace FinalProject.Migrations
                     b.Property<int>("Amount")
                         .HasColumnType("int");
 
-                    b.Property<int>("BillId")
+                    b.Property<int?>("BillId")
                         .HasColumnType("int");
 
                     b.Property<int>("ItemId")
@@ -38,16 +40,13 @@ namespace FinalProject.Migrations
                     b.Property<string>("ItemName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("State")
-                        .HasColumnType("bit");
-
                     b.HasKey("Id");
 
                     b.HasIndex("BillId");
 
                     b.HasIndex("ItemId");
 
-                    b.ToTable("BillDetails");
+                    b.ToTable("BillDetail");
                 });
 
             modelBuilder.Entity("ProyectoFinal.Models.Bill", b =>
@@ -66,11 +65,8 @@ namespace FinalProject.Migrations
                     b.Property<DateTime>("DatePurchase")
                         .HasColumnType("datetime2");
 
-                    b.Property<bool>("State")
-                        .HasColumnType("bit");
-
-                    b.Property<float>("Total")
-                        .HasColumnType("real");
+                    b.Property<int>("Total")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -144,19 +140,15 @@ namespace FinalProject.Migrations
 
             modelBuilder.Entity("FinalProject.Models.BillDetail", b =>
                 {
-                    b.HasOne("ProyectoFinal.Models.Bill", "Bill")
-                        .WithMany("BillDetails")
-                        .HasForeignKey("BillId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.HasOne("ProyectoFinal.Models.Bill", null)
+                        .WithMany("Items")
+                        .HasForeignKey("BillId");
 
                     b.HasOne("ProyectoFinal.Models.Item", "Item")
                         .WithMany()
                         .HasForeignKey("ItemId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Bill");
 
                     b.Navigation("Item");
                 });
@@ -174,7 +166,7 @@ namespace FinalProject.Migrations
 
             modelBuilder.Entity("ProyectoFinal.Models.Bill", b =>
                 {
-                    b.Navigation("BillDetails");
+                    b.Navigation("Items");
                 });
 #pragma warning restore 612, 618
         }

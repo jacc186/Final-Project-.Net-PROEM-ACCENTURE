@@ -10,7 +10,6 @@
     }
 
     .content {
-        max-width: 980px;
         margin-left: auto;
         margin-right: auto;
         display: grid;
@@ -24,7 +23,7 @@
     }
 
     body {
-        background-color: #51406a;
+        background-color: #f5f5f5;
         color: white;
         font-family: 'Radio Canada', sans-serif;
     }
@@ -32,17 +31,18 @@
     .logo {
         text-align: center;
         font-size: 3em;
+        color: #007da4;
     }
 
         .logo span {
-            color: #bd504f;
+            color: #fbb03b;
         }
 
     .table-wrapper {
         box-shadow: 0 0 20px rgb(126 197 250);
         margin-top: 1.2em;
         display: grid;
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: 2fr 1fr;
     }
 
         .table-wrapper > * {
@@ -50,11 +50,11 @@
         }
 
     .customer-table {
-        background-color: #645181;
+        background-color: #999999;
     }
 
     .customer-form {
-        background-color: #514857;
+        background-color: #4d4d4d;
     }
 
         .customer-form form .form-item {
@@ -78,7 +78,7 @@
     }
 
     .customer-form form .button input {
-        background-color: #bd504f;
+        background-color: #FFC366;
         border-bottom: 0;
         text-transform: uppercase;
         padding: 1em;
@@ -95,7 +95,7 @@
 
         .customer-form form .button input:hover,
         .customer-form form .button input:hover {
-            background-color: #ce5857;
+            background-color: #fbb03b;
             transition: 0.3s;
             outline: 0;
         }
@@ -111,6 +111,7 @@
         -moz-appearance: textfield; /* Firefox */
     }
 </style>
+
 <div class="content">
     <h1 class="logo">Control your <span>Bills</span></h1>
     <div class="table-wrapper">
@@ -119,21 +120,25 @@
             <table class="table table-bordered">
                 <thead>
                     <tr>
-                        <th>Id</th>
-                        <th>Customer</th>
+                        <th>Bill Id</th>
+                        <th>Customer Id</th>
+                        <th>Name</th>
                         <th>Total</th>
-                        <th>Purchase Date</th>
+                        <th>Date</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach (var bill in Model.Bills)
                     {
-                        <tr>
-                            <td>@bill.Id</td>
-                            <td>@bill.HowMany*@bill.Item.Price</td>
-                            <td>@bill.Item</td>
-                            <td>@bill.DatePurchase</td>
-                        </tr>
+                    <tr>
+                        <td>@bill.Id</td>
+                        <td>@bill.CustomerId</td>
+                        <td>@bill.CustomerName</td>
+                        <td>@bill.Total $.</td>
+                        <td>@bill.DatePurchase.ToShortDateString()</td>
+                        <td><a href="/Bill/Edit/@bill.Id"><i class="fa-solid fa-pen-to-square"></i></a></td>
+                        <td><a href="/Bill/Delete/@bill.Id"><i class="fa-solid fa-trash-can"></i></a></td>
+                    </tr>
                     }
                 </tbody>
             </table>
@@ -143,19 +148,42 @@
             <form action="" method="post">
                 <div class="form-check">
                     <label>Customer</label>
-                    <select class="form-control">
+                    <select name="Bill.CustomerId" class="form-control">
                         @foreach (var customer in Model.Customers)
                         {
+                        @if(Model.Bill.CustomerId!=0 && Model.Bill.CustomerId == customer.Id)
+                        {
+                        <option value="@customer.Id" selected>@customer.Name</option>
+                        }
+                        else
+                        {
                         <option value="@customer.Id">@customer.Name</option>
+                        }
                         }
                     </select>
                 </div>
                 <div class="form-item">
-                    <label for="email">Email</label>
-                    <input type="email" name="email" id="email" value="" />
+                    @for (int i=0;i<Model.Bill.BillDetails.Count; i++)
+                    {
+                    <label style="width: 100%;">Item</label>
+                    <select name="Bill.BillDetails[@i].ItemId" style="width: 50%;margin-right: 25%;">
+                        <option value="@Model.Bill.BillDetails[i].ItemId">@Model.Bill.BillDetails[i].ItemName</option>
+                    </select>
+                    <input type="number" name="Bill.BillDetails[@i].Amount" style="width: 22%;" value="@Model.Bill.BillDetails[i].Amount" readonly="readonly" placeholder="Amount" required />
+                    }
+                    <label style="width: 100%;">Item</label>
+                    <select name="BillDetail.ItemId" style="width: 50%;margin-right: 25%;">
+                        @foreach (var item in Model.Items)
+                        {
+                        <option value="@item.Id">@item.Name</option>
+                        }
+                    </select>
+                    <input type="number" name="BillDetail.Amount" style="width: 22%;" placeholder="Amount" required />
+                    <div class"AddItemMore"></div>
                 </div>
                 <div class="form-item button">
-                    <input type="submit" name="Add" value="Add" />
+                    <input type="submit" value="Buy" formaction="@Url.Action("Index","Bill")" />
+                    <input type="submit" value="Add Item" formaction="@Url.Action("AddItem","Bill")">
                 </div>
             </form>
         </div>

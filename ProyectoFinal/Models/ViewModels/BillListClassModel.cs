@@ -10,5 +10,9 @@ namespace FinalProject.Models
     {
         public List<Bill> Bills { get; set; }
         public List<Customer> Customers { get; set; }
+        public List<Item> Items { get; set; }
+        public Bill Bill { get; set; }
+        public BillDetail BillDetail { get; set; }
+
     }
 }

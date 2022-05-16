@@ -1,4 +1,4 @@
-﻿@model ProyectoFinal.Models.Customer
+﻿@model FinalProject.Models.BillListClassModel
 @*
 
 *@
@@ -102,22 +102,41 @@
 </style>
 
 <div class="content">
-    <h1 class="logo"> Manage your <span> Costumers</span> </h1>
+    <h1 class="logo"> Bills and more <span> Bills...</span> </h1>
     <div class="table-wrapper">
         <div class="customer-form">
-            <h3> Add a new costumer</h3>
+            <h3> Edit your Bill</h3>
             <form action="" method="post">
                 <div class="form-item">
-                    <label for="Id"> Id</label>
-                    <input type="text" name="Id" id="Id" value="@Model.Id" disabled="disabled" />
+                    <label for="Id"> Id Bill</label>
+                    <input type="text" name="Bill.Id" id="Id" value="@Model.Bill.Id" readonly="readonly" />
                 </div>
                 <div class="form-item">
-                    <label for="Name"> Fullname</label>
-                    <input type="text" name="Name" id="Name" value="@Model.Name" />
+                    <label for="Date"> Date</label>
+                    <input type="datetime" name="Bill.DatePurchase" value="@Model.Bill.DatePurchase.ToString("MM/dd/yyyy")" readonly="readonly" />
                 </div>
                 <div class="form-item">
-                    <label for="email"> Email</label>
-                    <input type="email" name="email" id="email" value="@Model.Email" />
+                    <label for="Name" style="width: 100%;"> Customer</label>
+                    <input type="text" name="Bill.CustomerName" id="Name" value="@Model.Bill.CustomerName" readonly="readonly" style="width: 30%;" />
+                    <input type="text" name="Bill.CustomerId" id="IdCustomer" value="@Model.Bill.CustomerId" readonly="readonly" style="width: 10%;" />
+                </div>
+                <div class="form-item">
+                    @for (int i = 0; i < Model.Bill.BillDetails.Count; i++)
+                    {
+                        <label style="width: 100%;">Item</label>
+                        <select name="Bill.BillDetails[@i].ItemId" style="width: 50%;margin-right: 25%;">
+                            <option value="@Model.Bill.BillDetails[i].ItemId">@Model.Bill.BillDetails[i].ItemName</option>
+                            @foreach (var item in Model.Items)
+                            {
+                                @if (item.Id != Model.Bill.BillDetails[i].ItemId)
+                                {
+                                    <option value="@item.Id">@item.Name</option>
+                                }
+                            }
+                        </select>
+                        <input type="number" name="Bill.BillDetails[@i].Amount" style="width: 22%;" value="@Model.Bill.BillDetails[i].Amount" placeholder="Amount" required />
+                        <input type="text" name="Bill.BillDetails[@i].Id" value="@Model.Bill.BillDetails[i].Id" hidden="hidden" />
+                    }
                 </div>
                 <div class="form-item button">
                     <input type="submit" name="Add" value="Add" />

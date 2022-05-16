@@ -23,7 +23,7 @@ namespace FinalProject.Controllers
                 context.SaveChanges();
             }
             var model = new ItemListViewModel();
-            model.Items = context.Items.ToList();
+            model.Items = context.Items.Where(x => x.State == true).ToList();
             return View(model);
         }
         [HttpPost]
@@ -46,7 +46,9 @@ namespace FinalProject.Controllers
             {
                 var model = new Item();
                 model = context.Items.Find(id);
-                context.Items.Remove(model);
+                model.State = false;
+                context.Attach(model);
+                context.Entry(model).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
                 context.SaveChanges();
             }
             return RedirectToAction("Index");

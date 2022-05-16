@@ -24,7 +24,7 @@ namespace FinalProject.Controllers
                 context.SaveChanges();
             }
             var modelList = new CustomersListViewModel();
-            modelList.Customers = context.Customers.ToList();
+            modelList.Customers = context.Customers.Where(x => x.Active == true).ToList();
             return View(modelList);
         }
         [HttpPost]
@@ -47,7 +47,9 @@ namespace FinalProject.Controllers
             {
                 var model = new Customer();
                 model = context.Customers.Find(id);
-                context.Customers.Remove(model);
+                model.Active = false;
+                context.Attach(model);
+                context.Entry(model).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
                 context.SaveChanges();
             }
             return RedirectToAction("Index");
