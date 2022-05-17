@@ -1,4 +1,4 @@
-﻿@model ProyectoFinal.Models.Item
+﻿@model FinalProject.Models.ViewModels.PaymentModelView
 @*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
@@ -42,7 +42,7 @@
         box-shadow: 0 0 20px rgb(126 197 250);
         margin-top: 1.2em;
         display: grid;
-        grid-template-columns: 1fr;
+        grid-template-columns: 2fr 1fr;
     }
 
         .table-wrapper > * {
@@ -99,28 +99,63 @@
             transition: 0.3s;
             outline: 0;
         }
+
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+        /* display: none; <- Crashes Chrome on hover */
+        -webkit-appearance: none;
+        margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+    }
+
+    input[type=number] {
+        -moz-appearance: textfield; /* Firefox */
+    }
 </style>
 
 <div class="content">
-    <h1 class="logo"> Manage your <span> Costumers</span> </h1>
+    <h1 class="logo">Payments and more <span>Payments</span></h1>
     <div class="table-wrapper">
+        <div class="customer-table">
+            <h3>Payments</h3>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Payment Id</th>
+                        <th>Customer Id</th>
+                        <th>Name</th>
+                        <th>Amount</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var pay in Model.PaymentsList)
+                    {
+                    <tr>
+                        <td>@pay.Id</td>
+                        <td>@pay.CustomerId</td>
+                        <td>@pay.Customer.Name</td>
+                        <td>@pay.Amount $.</td>
+                        <td><a href="/Payment/Edit/@pay.Id"><i class="fa-solid fa-pen-to-square"></i></a></td>
+                        <td><a href="/Payment/Delete/@pay.Id"><i class="fa-solid fa-trash-can"></i></a></td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
         <div class="customer-form">
-            <h3> Edit Your Item</h3>
+            <h3>Add a new Bill</h3>
             <form action="" method="post">
                 <div class="form-item">
-                    <div class="form-item">
-                        <label for="Id">Id</label>
-                        <input type="text" name="Id" id="Id" value="@Model.Id" disabled="disabled" />
-                    </div>
-                    <label for="Name">Name</label>
-                    <input type="text" name="Name" id="Name" value="@Model.Name" />
-                </div>
-                <div class="form-item">
-                    <label for="Price">Price</label>
-                    <input type="number" name="Price" id="Price" value="@Model.Price" />
+                    <label style="width: 100%;">Customer</label>
+                    <select name="Payment.CustomerId" class="form-item" style="width: 60%;margin-right: 10%;">
+                        @foreach (var customer in Model.Customers)
+                        {
+                        <option value="@customer.Id">@customer.Name</option>
+                        }
+                    </select>
+                    <input type="number" name="Payment.Amount" placeholder="Amount" style="width: 25%;">
                 </div>
                 <div class="form-item button">
-                    <input type="submit" name="Edit" value="Edit" />
+                    <input type="submit" value="Pay" formaction="@Url.Action("Index","Payment")" />
                 </div>
             </form>
         </div>

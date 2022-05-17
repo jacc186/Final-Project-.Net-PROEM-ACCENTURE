@@ -1,14 +1,16 @@
-﻿@{
-    ViewData["Title"] = "Inicio";
+﻿@model List<FinalProject.Models.ViewModels.CustomerRankViewModel>
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
 }
-
 <style>
-    * {
+     * {
         box-sizing: border-box;
     }
 
     .content {
-        margin-left: 6em;
+        margin-left: auto;
         margin-right: auto;
         display: grid;
         width: 100%;
@@ -27,12 +29,13 @@
     }
 
     .logo {
+        text-align: center;
         font-size: 3em;
-        color: #fbb03b;
+        color: #007da4;
     }
 
         .logo span {
-            color: #007da4;
+            color: #fbb03b;
         }
 
     .table-wrapper {
@@ -47,11 +50,11 @@
         }
 
     .customer-table {
-        background-color: #999999;
+        background-color: #999999
     }
 
     .customer-form {
-        background-color: #4d4d4d;
+        background-color: #999999;
     }
 
         .customer-form form .form-item {
@@ -96,66 +99,35 @@
             transition: 0.3s;
             outline: 0;
         }
-
-    .typed-out {
-        overflow: hidden;
-        border-right: .15em solid #007da4;
-        white-space: nowrap;
-        font-size: 1.6rem;
-        width: 0;
-        animation: typing 8s steps(120, end) forwards, blink .8s infinite;
-        max-width: fit-content;
-        margin-bottom: .5rem;
-    }
-
-    @@keyframes typing {
-        from {
-            width: 0
-        }
-
-        to {
-            width: 100%
-        }
-    }
-
-    @@keyframes blink {
-        from {
-            border-color: transparent
-        }
-
-        to {
-            border-color: #fbb03b
-        }
-    }
-    @@keyframes blinkRed {
-        from {
-            border-color: transparent
-        }
-
-        to {
-            border-color: red
-        }
-    }
-
-    .typeout-next {
-        overflow: hidden;
-        border-right: .15em solid red;
-        white-space: nowrap;
-        width: 0;
-        animation: typing 8s steps(120, end) forwards, blinkRed .8s infinite;
-        animation-delay: 5s;
-        max-width: fit-content;
-        color: red;
-    }
+        .table{
+        color:white;}
 </style>
 
 <div class="content">
-    <h1 class="logo">Welcome to my final project with</h1>
-    <div class="containerBox">
-        <div class="typed-out logo"><span>Proem and Accenture.</span></div>
-
-        <div class="typeout-next">
-            Thanks for all
+    <h1 class="logo"> Rank<span>ing</span> </h1>
+    <div class="table-wrapper">
+        <div class="customer-form">
+           <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Customer</th>
+                        <th>Id</th>
+                        <th>Money Spent</th>
+                        <th>Rank</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (int i = 0; i < @Model.Count; i++)
+                    {
+                    <tr>
+                        <td>@Model[@i].CustomerName</td>
+                        <td>@Model[@i].CustomerId</td>
+                        <td>@Model[@i].MoneySpent $</td>
+                        <td>@(i+1)</td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
         </div>
     </div>
 </div>

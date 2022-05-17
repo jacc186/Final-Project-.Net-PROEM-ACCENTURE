@@ -78,6 +78,12 @@ namespace FinalProject.Controllers
             }
             context.Attach(bill);
             context.Entry(bill).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+            var details = bill.BillDetails;
+            foreach(var item in details)
+            {
+                context.Attach(item);
+                context.Entry(item).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+            }
             context.SaveChanges();
             return RedirectToAction("Index");
         }

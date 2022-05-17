@@ -1,4 +1,5 @@
-﻿using ProyectoFinal.Models;
+﻿using FinalProject.Models.ViewModels;
+using ProyectoFinal.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;

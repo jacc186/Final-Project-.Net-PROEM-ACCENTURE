@@ -1,14 +1,16 @@
-﻿@{
-    ViewData["Title"] = "Inicio";
-}
+﻿@model ProyectoFinal.Models.Payment
+@*
 
+*@
+@{
+}
 <style>
     * {
         box-sizing: border-box;
     }
 
     .content {
-        margin-left: 6em;
+        margin-left: auto;
         margin-right: auto;
         display: grid;
         width: 100%;
@@ -27,12 +29,13 @@
     }
 
     .logo {
+        text-align: center;
         font-size: 3em;
-        color: #fbb03b;
+        color: #007da4;
     }
 
         .logo span {
-            color: #007da4;
+            color: #fbb03b;
         }
 
     .table-wrapper {
@@ -96,66 +99,30 @@
             transition: 0.3s;
             outline: 0;
         }
-
-    .typed-out {
-        overflow: hidden;
-        border-right: .15em solid #007da4;
-        white-space: nowrap;
-        font-size: 1.6rem;
-        width: 0;
-        animation: typing 8s steps(120, end) forwards, blink .8s infinite;
-        max-width: fit-content;
-        margin-bottom: .5rem;
-    }
-
-    @@keyframes typing {
-        from {
-            width: 0
-        }
-
-        to {
-            width: 100%
-        }
-    }
-
-    @@keyframes blink {
-        from {
-            border-color: transparent
-        }
-
-        to {
-            border-color: #fbb03b
-        }
-    }
-    @@keyframes blinkRed {
-        from {
-            border-color: transparent
-        }
-
-        to {
-            border-color: red
-        }
-    }
-
-    .typeout-next {
-        overflow: hidden;
-        border-right: .15em solid red;
-        white-space: nowrap;
-        width: 0;
-        animation: typing 8s steps(120, end) forwards, blinkRed .8s infinite;
-        animation-delay: 5s;
-        max-width: fit-content;
-        color: red;
-    }
 </style>
 
 <div class="content">
-    <h1 class="logo">Welcome to my final project with</h1>
-    <div class="containerBox">
-        <div class="typed-out logo"><span>Proem and Accenture.</span></div>
-
-        <div class="typeout-next">
-            Thanks for all
+    <h1 class="logo"> Edit your <span> Payments</span> </h1>
+    <div class="table-wrapper">
+        <div class="customer-form">
+            <h3> Edit Payment</h3>
+            <form action="" method="post">
+                <div class="form-item">
+                    <label for="Id">Payment Id</label>
+                    <input type="text" name="Payment.Id" id="Id" value="@Model.Id" readonly="readonly" />
+                </div>
+                <div class="form-item">
+                    <label for="Name"> Customer Id</label>
+                    <input type="text" name="Payment.CustomerId" value="@Model.CustomerId" readonly="readonly"/>
+                </div>
+                <div class="form-item">
+                    <label for="Amount"> Amount</label>
+                    <input type="text" name="Payment.Amount" id="Amount" value="@Model.Amount" />
+                </div>
+                <div class="form-item button">
+                    <input type="submit" name="Add" value="Add" />
+                </div>
+            </form>
         </div>
     </div>
 </div>
