@@ -17,7 +17,7 @@ namespace ProyectoFinal.Models
         public int CustomerId { get; set; }
 
         [Required(ErrorMessage = "Amount Required")]
-        public decimal Amount { get; set; }
+        public float Amount { get; set; }
         public Customer Customer { get; set; }
 
     }
