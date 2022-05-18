@@ -3,7 +3,7 @@ Here i post my final project in .Net with Proem and Accenture
 
 ![image](https://raw.githubusercontent.com/jacc186/Final-Project-.Net-PROEM-ACCENTURE/main/gifs/Animation.gif)
 ![image](https://raw.githubusercontent.com/jacc186/Final-Project-.Net-PROEM-ACCENTURE/main/gifs/AnimationDashboard.gif)
-![image](https://raw.githubusercontent.com/jacc186/Final-Project-.Net-PROEM-ACCENTURE/main/gifs/Animation.gif)
+![image](https://github.com/jacc186/Final-Project-.Net-PROEM-ACCENTURE/blob/main/gifs/AnimationItems.gif)
 ![image](https://raw.githubusercontent.com/jacc186/Final-Project-.Net-PROEM-ACCENTURE/main/gifs/Animation.gif)
 ![image](https://raw.githubusercontent.com/jacc186/Final-Project-.Net-PROEM-ACCENTURE/main/gifs/Animation.gif)
 ![image](https://raw.githubusercontent.com/jacc186/Final-Project-.Net-PROEM-ACCENTURE/main/gifs/Animation.gif)
