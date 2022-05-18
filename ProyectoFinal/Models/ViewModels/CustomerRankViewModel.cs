@@ -6,7 +6,7 @@ namespace FinalProject.Models.ViewModels
     {
         public string CustomerName { get; set; }
         public int CustomerId { get; set; }
-
         public float MoneySpent { get; set; }
+        public float Payments { get; set; }
     }
 }

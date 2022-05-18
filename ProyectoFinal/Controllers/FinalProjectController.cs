@@ -173,7 +173,9 @@ namespace FinalProject.Controllers
         [HttpGet]
         public async Task<IActionResult> ExportPdf()
         {
+            var payments = await context.Payments.ToListAsync();
             var bills = await context.Bills.ToListAsync();
+            var customers = await context.Customers.ToListAsync();
             var billsrank = bills.GroupBy(b => b.CustomerId).Select(x => new CustomerRankViewModel
             {
                 CustomerId = x.First().CustomerId,
@@ -248,6 +250,75 @@ namespace FinalProject.Controllers
             }
 
             report.Add(table);
+
+            text = new Paragraph("Current Account")
+                .SetTextAlignment(iText.Layout.Properties.TextAlignment.CENTER)
+                .SetFontSize(15)
+                .SetMarginBottom(3);
+            report.Add(text);
+
+            table = new Table(3, false);
+            table.SetHorizontalAlignment(iText.Layout.Properties.HorizontalAlignment.CENTER);
+
+            cell = new Cell()
+                .SetBackgroundColor(ColorConstants.LIGHT_GRAY)
+                .SetTextAlignment(iText.Layout.Properties.TextAlignment.CENTER)
+                .Add(new Paragraph("Customer Id"));
+            table.AddCell(cell);
+
+            cell = new Cell();
+            cell.SetBackgroundColor(ColorConstants.LIGHT_GRAY)
+                .SetTextAlignment(iText.Layout.Properties.TextAlignment.CENTER)
+                .Add(new Paragraph("Customer Name"));
+            table.AddCell(cell);
+
+            cell = new Cell();
+            cell.SetBackgroundColor(ColorConstants.LIGHT_GRAY)
+                .SetTextAlignment(iText.Layout.Properties.TextAlignment.CENTER)
+                .Add(new Paragraph("Balance"));
+            table.AddCell(cell);
+
+            var customersGrouped = customers.GroupBy(x=>x.Id);
+            var billsGrouped = bills.GroupBy(x => x.CustomerId).Select(y=> new Bill
+            {
+                Total = y.Sum(x=>x.Total),
+                CustomerId = y.FirstOrDefault().CustomerId,               
+            }).ToList();
+
+            var current = (from pay in payments
+                           group pay by pay.CustomerId into pb
+                           join bill in billsGrouped on pb.FirstOrDefault().CustomerId equals bill.CustomerId
+                           join customer in customersGrouped on bill.CustomerId equals customer.FirstOrDefault().Id
+                           select new CustomerRankViewModel
+                           {
+                               CustomerId = pb.FirstOrDefault().CustomerId,
+                               MoneySpent = bill.Total,
+                               Payments = pb.Sum(x=>x.Amount),
+                               CustomerName = customer.FirstOrDefault().Name,
+                           }).ToList();
+
+            foreach(var item in current)
+            {
+                cell = new Cell()
+                .SetBackgroundColor(ColorConstants.WHITE)
+                .SetTextAlignment(iText.Layout.Properties.TextAlignment.CENTER)
+                .Add(new Paragraph(item.CustomerId.ToString()));
+                table.AddCell(cell);
+
+                cell = new Cell();
+                cell.SetBackgroundColor(ColorConstants.WHITE)
+                    .SetTextAlignment(iText.Layout.Properties.TextAlignment.CENTER)
+                    .Add(new Paragraph(item.CustomerName));
+                table.AddCell(cell);
+
+                cell = new Cell();
+                cell.SetBackgroundColor(ColorConstants.WHITE)
+                    .SetTextAlignment(iText.Layout.Properties.TextAlignment.CENTER)
+                    .Add(new Paragraph((item.Payments - item.MoneySpent).ToString()));
+                table.AddCell(cell);
+            }
+            report.Add(table);
+
             report.Close();
 
             var st2 = new MemoryStream();
