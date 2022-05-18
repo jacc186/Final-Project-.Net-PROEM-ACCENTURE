@@ -5,7 +5,7 @@
 @{
 }
 <style>
-     * {
+    * {
         box-sizing: border-box;
     }
 
@@ -16,6 +16,10 @@
         width: 100%;
         padding: 1.5em;
         margin-top: 0.5em;
+        grid-template-areas:
+            'logo logo'
+            'table table'
+            'button1 button2';
     }
 
     .links {
@@ -32,6 +36,7 @@
         text-align: center;
         font-size: 3em;
         color: #007da4;
+        grid-area: logo;
     }
 
         .logo span {
@@ -43,6 +48,7 @@
         margin-top: 1.2em;
         display: grid;
         grid-template-columns: 1fr;
+        grid-area: table;
     }
 
         .table-wrapper > * {
@@ -88,26 +94,37 @@
         margin: 1em;
     }
 
-    .customer-form form {
-        display: grid;
-        grid-template-columns: 1fr;
+    .customer-form form .button input:hover,
+    .customer-form form .button input:hover {
+        background-color: #fbb03b;
+        transition: 0.3s;
+        outline: 0;
     }
 
-        .customer-form form .button input:hover,
-        .customer-form form .button input:hover {
-            background-color: #fbb03b;
-            transition: 0.3s;
-            outline: 0;
-        }
-        .table{
-        color:white;}
-</style>
+    .table {
+        color: white;
+    }
 
+    .button-to {
+        padding: 3em;
+    }
+
+    .button1 {
+        grid-area: button1;
+    }
+
+    .button2 {
+        grid-area: button2;
+        display: flex;
+        justify-content: flex-end;
+    }
+</style>
+<form>
 <div class="content">
     <h1 class="logo"> Rank<span>ing</span> </h1>
     <div class="table-wrapper">
         <div class="customer-form">
-           <table class="table table-bordered">
+            <table class="table table-bordered">
                 <thead>
                     <tr>
                         <th>Customer</th>
@@ -119,15 +136,23 @@
                 <tbody>
                     @for (int i = 0; i < @Model.Count; i++)
                     {
-                    <tr>
-                        <td>@Model[@i].CustomerName</td>
-                        <td>@Model[@i].CustomerId</td>
-                        <td>@Model[@i].MoneySpent $</td>
-                        <td>@(i+1)</td>
-                    </tr>
+                        <tr>
+                            <td>@Model[@i].CustomerName</td>
+                            <td>@Model[@i].CustomerId</td>
+                            <td>@Model[@i].MoneySpent $</td>
+                            <td>@(i+1)</td>
+                        </tr>
                     }
                 </tbody>
             </table>
         </div>
     </div>
+        <div class="button-to button1">
+            <input type="submit" class="btn btn-danger" value="Pdf Report" formaction="@Url.Action("ExportPdf","FinalProject")">
+        </div>
+
+        <div class="button-to button2">
+            <input type="submit" class="btn btn-success" value="Excel Report" formaction="@Url.Action("ExportExcel","FinalProject")">
+        </div>
 </div>
+</form>
