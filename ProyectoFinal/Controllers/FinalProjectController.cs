@@ -33,7 +33,7 @@ namespace FinalProject.Controllers
         public IActionResult Dashboard()
         {
             var bills = context.Bills.ToList();
-            var billsrank = bills.GroupBy(b => b.CustomerId).Select(x => new CustomerRankViewModel
+            var billsrank = bills.Where(x=>x.State==true).GroupBy(b => b.CustomerId).Select(x => new CustomerRankViewModel
             {
                 CustomerId = x.First().CustomerId,
                 CustomerName = x.First().CustomerName,
@@ -174,8 +174,8 @@ namespace FinalProject.Controllers
         public async Task<IActionResult> ExportPdf()
         {
             var payments = await context.Payments.ToListAsync();
-            var bills = await context.Bills.ToListAsync();
-            var customers = await context.Customers.ToListAsync();
+            var bills = await context.Bills.Where(x=>x.State==true).ToListAsync();
+            var customers = await context.Customers.Where(x=>x.Active==true).ToListAsync();
             var billsrank = bills.GroupBy(b => b.CustomerId).Select(x => new CustomerRankViewModel
             {
                 CustomerId = x.First().CustomerId,
@@ -291,10 +291,12 @@ namespace FinalProject.Controllers
                            join customer in customersGrouped on bill.CustomerId equals customer.FirstOrDefault().Id
                            select new CustomerRankViewModel
                            {
-                               CustomerId = pb.FirstOrDefault().CustomerId,
-                               MoneySpent = bill.Total,
-                               Payments = pb.Sum(x=>x.Amount),
-                               CustomerName = customer.FirstOrDefault().Name,
+                               CustomerId = pb.FirstOrDefault().CustomerId>0 ? pb.FirstOrDefault().CustomerId : bill.CustomerId,
+                               MoneySpent = bill.Total>0 ? bill.Total : 0,
+                               Payments = pb.Sum(x=>x.Amount)>0 ? pb.Sum(x=>x.Amount) : 0,
+                               CustomerName = context.Customers.Find(pb.FirstOrDefault().CustomerId).Name != null ? 
+                               context.Customers.Find(pb.FirstOrDefault().CustomerId).Name :
+                               context.Customers.Find(bill.CustomerId).Name
                            }).ToList();
 
             foreach(var item in current)
