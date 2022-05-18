@@ -5,7 +5,7 @@ Home Page:
 ![image](https://raw.githubusercontent.com/jacc186/Final-Project-.Net-PROEM-ACCENTURE/main/gifs/Animation.gif)
 
 
-Dashboard that contains an Excel Report and a PDF Report, also a ranking by customers in purchases
+Dashboard that contains an Excel Report and a PDF Report, also a ranking by customers purchases
 ![image](https://raw.githubusercontent.com/jacc186/Final-Project-.Net-PROEM-ACCENTURE/main/gifs/AnimationDashboard.gif)
 
 
